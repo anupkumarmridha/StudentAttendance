@@ -1,7 +1,7 @@
 env
 db.sqlite3
-# accounts/migrations
-# home/migrations
+accounts/migrations
+home/migrations
 accounts/__pycache__
 home/__pycache__
 StudentAttendance/__pycache__
