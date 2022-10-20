@@ -1,0 +1,54 @@
+<div class="custom">
+  <div class="custom-header">
+    <h5 class="custom-title" id="offcanvasLabel">Student</h5>
+  </div>
+  <div class="custom-body">
+      {% if user.is_authenticated %}
+      <ul class="sidenav-list">
+        <li class="sidenav-list-item"><i class="bi bi-person-fill"></i> <a href= "#" class="dash-link">Profile</a></li>
+        <li class="sidenav-list-item"><i class="bi bi-cloud-upload"></i> <a href="#" class="dash-link">Update Resume</a>
+        </li>
+        <li class="sidenav-list-item"><i class="bi bi-list-ul"></i> <a href="#" class="dash-link">Companies</a></li>
+        <li class="sidenav-list-item"><i class="bi bi-circle"></i> <a href="#" class="dash-link">Interview Expriences</a></li>
+        <li class="sidenav-list-item"><i class="bi bi-app-indicator"></i> <a href="#" class="dash-link">Add Interview Expriences</a></li>
+        <li class="sidenav-list-item"><i class="bi bi-archive"></i> <a href="#" class="dash-link">Jobs</a></li>
+        
+        <li class="sidenav-list-item"><i class="bi bi-arrow-bar-up"></i> <a href="#" class="dash-link">Add Companies</a></li>
+        <li class="sidenav-list-item"><i class="bi bi-basket3"></i> <a href="#" class="dash-link">Add Job</a></li>
+       
+        <li class="sidenav-list-item"><i class="bi bi-key-fill"></i> <a href="#" class="dash-link">Change Password</a>   </li>
+        <ul class="login-btns">
+          <li class="sidenav-list-item"> <a class="dash-link">
+            <form action='{% url 'handleLogout' %}' method='post'>
+              {% csrf_token %}
+              <div class="form-group">
+                  <input type="hidden" name="value">
+              </div>
+
+              <button class="dropdown-item" type="submit"><i class="bi bi-power" style="margin-right:10px;"></i>Logout</button>
+          </form>
+          </a></li>
+        </ul>
+      </ul>
+      {% else %}
+      <!-- Button to trigger login modal -->
+      <ul class="login-btns">
+        <li class="login-btns-items">
+          <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#loginModal">
+            Login
+          </button>
+        </li>
+        
+        <!-- Button to trigger singup modal -->
+        <li class="login-btns-items">
+          <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#signupModal">
+            Sign up
+          </button>
+        </li>
+      </ul>
+
+      {% comment %} <a class="nav-link" type="button" class="btn btn-danger mr-2"
+        href="{% url 'register' %}">Register</a> {% endcomment %}
+      {% endif %}
+  </div>
+</div>
