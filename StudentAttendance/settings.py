@@ -142,7 +142,7 @@ MEDIA_URL="/media/"
 MEDIA_ROOT=os.path.join(BASE_DIR,"media")
 
 #added manually
-AUTHENTICATION_BACKENDS=['accounts.EmailBackEnd.EmailBackEnd']
+# AUTHENTICATION_BACKENDS=['accounts.EmailBackEnd.EmailBackEnd']
 AUTH_USER_MODEL='accounts.User'
 
 # Default primary key field type

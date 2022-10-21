@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from django.shortcuts import render, HttpResponse, redirect
 from accounts.EmailBackEnd import EmailBackEnd
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, authenticate
 from accounts.models import User
 from django.contrib import messages
 from home import views
@@ -60,9 +60,10 @@ def handleLogin(request):
         # Get the post parameters
         loginusername = request.POST["loginusername"]
         loginpassword = request.POST["loginpassword"]
-        user = EmailBackEnd.authenticate(
-            request, username=loginusername, password=loginpassword
-        )
+        # user = EmailBackEnd.authenticate(
+        #     request, username=loginusername, password=loginpassword
+        # )
+        user=authenticate(username=loginusername, password=loginpassword)
         if user is not None:
             login(request, user)
             messages.success(request, "Successfuly logged in 🥰")

@@ -5,7 +5,7 @@
   <div class="custom-body">
       {% if user.is_authenticated %}
       <ul class="sidenav-list">
-        <li class="sidenav-list-item"><i class="bi bi-person-fill"></i> <a href= "#" class="dash-link">Profile</a></li>
+        <li class="sidenav-list-item"><i class="bi bi-person-fill"></i> <a href= "{% url 'viewStudentProfile' %}" class="dash-link">Profile</a></li>
         <li class="sidenav-list-item"><i class="bi bi-cloud-upload"></i> <a href="#" class="dash-link">Update Resume</a>
         </li>
         <li class="sidenav-list-item"><i class="bi bi-list-ul"></i> <a href="#" class="dash-link">Companies</a></li>

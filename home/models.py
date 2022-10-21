@@ -1,22 +1,27 @@
 from django.db import models
-from accounts.models import User, Student
+import accounts.models as account_model
 
 # Create your models here.
-class Course(models.Model):
-    course_name = models.CharField(max_length=255)
-    course_name = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    objects = models.Manager()
-    def __str__(self):
-        return str(self.course_name)  
 
 class Subject(models.Model):
     subject_name = models.CharField(max_length=255)
-    course_id = models.ForeignKey(Course, on_delete=models.CASCADE, default=1) #need to give defauult course
-    staff_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    dept_name = models.ForeignKey(account_model.Department, on_delete=models.CASCADE) #need to give defauult course
+    faculty_name = models.ForeignKey(account_model.Faculty, on_delete=models.CASCADE)
+    sem = models.ForeignKey(account_model.Semester, on_delete=models.CASCADE)
+    Students = models.ManyToManyField(account_model.Student)
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     objects = models.Manager()
     def __str__(self):
         return str(self.subject_name)  
+
+class Attendance(models.Model):
+    subject = models.ForeignKey(Subject,on_delete=models.CASCADE)
+    student = models.ForeignKey(account_model.Student, on_delete=models.CASCADE)
+    attendance_date = models.DateField()
+    status = models.CharField(max_length=250, choices = [('1','Present'),('2','Absent')] )
+    date_updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.subject + "  " +self.attendance_date

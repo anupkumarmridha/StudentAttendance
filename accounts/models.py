@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+import home.models as home_model
+
 # Create your models here.
 class User(AbstractUser):
     user_type_data = ((1, "HOD"),(2, "Student"), (3, "Faculty"))
@@ -22,8 +24,7 @@ class Faculty(models.Model):
     campusEmail= models.CharField(max_length=255, blank=True, null=True)
     gender_choice=(('M',"Male"),('F',"Female"))
     gender = models.CharField(choices=gender_choice, max_length=20)
-    profile_pic = models.ImageField(null=True, blank=True,upload_to='images/Students/profile/')
-    dob = models.DateField()
+    profile_pic = models.ImageField(null=True, blank=True,upload_to='images/Facultys/profile/')
     fid=models.CharField(max_length=9, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -32,6 +33,19 @@ class Faculty(models.Model):
     def __str__(self):
         return str(self.user)
 
+class Department(models.Model):
+    dept_name = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    objects = models.Manager()
+    def __str__(self):
+        return str(self.dept_name)  
+
+class Semester(models.Model):
+    sem_choice= (('1',"First Semester"),('2',"Second Semester"), ('3', "Third Semester"), ('4', "Fourth Semester"), ('5', "Fifth Semester"),('6', "Six Semester"),('7', "Seven Semester"),('8', "Eight Semester"))
+    sem = models.CharField(choices=sem_choice, max_length=255)
+    def __str__(self):
+        return str(self.sem) 
 
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)
@@ -40,8 +54,9 @@ class Student(models.Model):
     gender_choice=(('M',"Male"),('F',"Female"))
     gender = models.CharField(choices=gender_choice, max_length=20)
     profile_pic = models.ImageField(null=True, blank=True,upload_to='images/Students/profile/')
-    dob = models.DateField()
     roll=models.CharField(max_length=9, unique=True)
+    Department=models.ForeignKey(Department, on_delete=models.CASCADE)
+    Semester=models.ForeignKey(Semester, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     objects = models.Manager()

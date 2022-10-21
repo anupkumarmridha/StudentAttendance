@@ -38,8 +38,7 @@
         {% include 'nav.html' %}
     
         <!--End Navbar -->
-        <!-- Profile Block -->
-        {% block profile %}{% endblock profile %}
+
       
         {% if messages %} {% for message in messages %}
       
@@ -48,7 +47,10 @@
           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         {% endfor %} {% endif %}
-      
+        
+        <!-- Profile Block -->
+        {% block profile %}{% endblock profile %}
+        
         <!--Singup Modal -->
       {% include 'signup.html' %}
         <!--End Singup Modal -->
@@ -56,6 +58,9 @@
         <!--Login Modal -->
       {% include 'login.html' %}
        <!--End Login Modal -->
+        <!--getLocation  -->
+      {% include 'getLocation.html' %}
+       <!--End getLocation -->
     
     
       {% block body %}
