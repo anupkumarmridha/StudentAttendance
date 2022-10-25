@@ -5,9 +5,9 @@ import home.models as home_model
 
 # Create your models here.
 class User(AbstractUser):
-    user_type_data = ((1, "HOD"),(2, "Student"), (3, "Faculty"))
+    user_type_data = (('1', "HOD"),('2', "Student"), ('3', "Faculty"))
     # user_type = models.CharField(choices=user_type_data, max_length=20)
-    user_type = models.CharField(default=1, choices=user_type_data, max_length=20)
+    user_type = models.CharField(choices=user_type_data, max_length=20)
 
 
 class Hod(models.Model):
