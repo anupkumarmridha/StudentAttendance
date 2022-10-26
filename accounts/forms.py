@@ -1,6 +1,5 @@
-from dataclasses import fields
 from django import forms
-from accounts.models import User, Student, Faculty, Department, Semester
+from accounts.models import Student, Faculty, Department, Semester
 
 
 try:
@@ -11,13 +10,6 @@ try:
 except Exception as e:
     print(e)
 
-try:
-    sems = Semester.objects.all().values_list("sem", "sem")
-    sem_list = []
-    for item in depts:
-        sem_list.append(item)
-except Exception as e:
-    print(e)
 
 
 class addStudentForm(forms.ModelForm):
@@ -59,7 +51,7 @@ class addStudentForm(forms.ModelForm):
             "Department": forms.Select(
                 choices=dept_list, attrs={"class": "form-control"}
             ),
-            "Semester": forms.Select(choices=sem_list, attrs={"class": "form-control"}),
+            "Semester": forms.Select(attrs={"class": "form-control"}),
         }
 
 
@@ -93,7 +85,7 @@ class updateStudentForm(forms.ModelForm):
             "Department": forms.Select(
                 choices=dept_list, attrs={"class": "form-control"}
             ),
-            "Semester": forms.Select(choices=sem_list, attrs={"class": "form-control"}),
+            "Semester": forms.Select(attrs={"class": "form-control"}),
         }
 
 
