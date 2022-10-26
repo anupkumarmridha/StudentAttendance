@@ -14,7 +14,7 @@ class Subject(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     objects = models.Manager()
     def __str__(self):
-        return str(self.subject_name)  
+        return str(self.subject_name ) + ' ' + str(self.dept_name) + ' faculty ' + str(self.faculty_name)
 
 class Attendance(models.Model):
     subject = models.ForeignKey(Subject,on_delete=models.CASCADE)
@@ -24,4 +24,4 @@ class Attendance(models.Model):
     date_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.subject + "  " +self.attendance_date
+        return str(self.subject) + " Date " + str(self.attendance_date) + " student  " + str(self.student) 
