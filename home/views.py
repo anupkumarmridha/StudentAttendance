@@ -1,8 +1,6 @@
-from re import sub
 from django.shortcuts import render, redirect
 from home.forms import addSubjectForm
-from accounts.models import Faculty, Semester, Student
-from home.models import Subject
+from accounts.models import Faculty, Student
 from django.contrib import messages
 # Create your views here.
 
@@ -26,10 +24,6 @@ def addSubject(request):
                 obj = form.save(commit=False) # Return an object without saving to the DB
                 try:
                     students=Student.objects.filter(Semester=obj.sem)
-                    student_list=[]
-                    for item in students:
-                        student_list.append(item)
-
                 except Exception as e:
                     print(e)
                 obj.dept_name= faculty.Department
