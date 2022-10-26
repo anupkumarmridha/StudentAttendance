@@ -1,10 +1,9 @@
-from accounts.models import Student, User
+from accounts.models import Student
 from django.contrib import messages
-from django.shortcuts import render, HttpResponse, redirect
+from django.shortcuts import render, redirect
 from accounts.forms import addStudentForm, updateStudentForm
-from home import views as homeView
 from django.views.generic import UpdateView
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse
 
 def viewStudentProfile(request):
     try:
@@ -28,7 +27,7 @@ def addStudent(request):
             if form.is_valid():
                 form.save()
                 messages.success(request, "Student info added successfully")
-                return redirect(viewStudentProfile.homeView)
+                return redirect(viewStudentProfile)
             else:
                 messages.error(request, "Form is Not Valid")
         except Exception as e:

@@ -1,20 +1,27 @@
 <div class="custom">
   <div class="custom-header">
-    <h5 class="custom-title" id="offcanvasLabel">Student</h5>
+    <h5 class="custom-title" id="offcanvasLabel">{{ user.username }}</h5>
   </div>
   <div class="custom-body">
       {% if user.is_authenticated %}
+
+      {% if user.user_type == '1' or user.is_superuser %}
+      
       <ul class="sidenav-list">
         <li class="sidenav-list-item"><i class="bi bi-person-fill"></i> <a href= "{% url 'viewStudentProfile' %}" class="dash-link">Profile</a></li>
-        <li class="sidenav-list-item"><i class="bi bi-cloud-upload"></i> <a href="#" class="dash-link">Update Resume</a>
-        </li>
-        <li class="sidenav-list-item"><i class="bi bi-list-ul"></i> <a href="#" class="dash-link">Companies</a></li>
+        <li class="sidenav-list-item"><i class="bi bi-list-ul"></i> <a href="#" class="dash-link">view Attendance</a></li>
+        <li class="sidenav-list-item"><i class="bi bi-list-ul"></i> <a href="#" class="dash-link">Give Attendance</a></li>
+        {% endif %}
+
+        {% if user.user_type == '2' or user.is_superuser %}
+        <li class="sidenav-list-item"><i class="bi bi-person-fill"></i> <a href= "{% url 'viewFacultyProfile' %}" class="dash-link">Profile</a></li>
+        <li class="sidenav-list-item"><i class="bi bi-arrow-bar-up"></i> <a href="#" class="dash-link">Add Subjects</a></li>
+        {% endif %}
+        
         <li class="sidenav-list-item"><i class="bi bi-circle"></i> <a href="#" class="dash-link">Interview Expriences</a></li>
         <li class="sidenav-list-item"><i class="bi bi-app-indicator"></i> <a href="#" class="dash-link">Add Interview Expriences</a></li>
         <li class="sidenav-list-item"><i class="bi bi-archive"></i> <a href="#" class="dash-link">Jobs</a></li>
         
-        <li class="sidenav-list-item"><i class="bi bi-arrow-bar-up"></i> <a href="#" class="dash-link">Add Companies</a></li>
-        <li class="sidenav-list-item"><i class="bi bi-basket3"></i> <a href="#" class="dash-link">Add Job</a></li>
        
         <li class="sidenav-list-item"><i class="bi bi-key-fill"></i> <a href="#" class="dash-link">Change Password</a>   </li>
         <ul class="login-btns">
