@@ -1,6 +1,6 @@
 from django.db import models
 import accounts.models as account_model
-
+import datetime
 # Create your models here.
 
 class Subject(models.Model):
@@ -19,7 +19,7 @@ class Subject(models.Model):
 class Attendance(models.Model):
     subject = models.ForeignKey(Subject,on_delete=models.CASCADE)
     student = models.ForeignKey(account_model.Student, on_delete=models.CASCADE)
-    attendance_date = models.DateField()
+    attendance_date = models.DateField(default=datetime.date.today)
     status = models.CharField(max_length=250, choices = [('1','Present'),('2','Absent')] )
     date_updated = models.DateTimeField(auto_now=True)
 

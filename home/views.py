@@ -3,17 +3,58 @@ from home.forms import addSubjectForm, updateSubjectForm
 from accounts.models import Faculty, Student
 from django.contrib import messages
 from django.urls import reverse_lazy, reverse
-from home.models import Subject
+from home.models import Subject, Attendance
 
 from django.views.generic import (
     UpdateView,
     DeleteView,
 )
-# Create your views here.
 
 # Create your views here.
 def homeView(request):
     return render(request, "home/index.html")
+
+
+def getLocation(request):
+    if request.method=='POST':   
+        stu_lang = request.POST.get("stu_lang")
+        stu_lat = request.POST.get("stu_lat")
+        faculty_lang = request.POST.get("faculty_lang")
+        faculty_lat = request.POST.get("faculty_lat")
+        print(stu_lang)
+        print(stu_lat)
+        print(faculty_lang)
+        print(faculty_lat)
+        messages.success(request, "Your Current Location is send ")    
+        loc={
+            "stu_lang":stu_lang,
+            "stu_lat":stu_lat,
+            "faculty_lang": faculty_lang,
+            "faculty_lat":faculty_lat
+        }
+    return render(request, "getLocation.html")
+
+
+
+def addAttendance(request):
+    user=request.user
+    try:
+        student=Student.objects.get(user=user)
+    except Exception as e:
+        print(e)
+        
+    if request.method=='POST':   
+        stu_lang = request.POST.get("stu_lang")
+        stu_lat = request.POST.get("stu_lat")
+        faculty_lang = request.POST.get("faculty_lang")
+        faculty_lat = request.POST.get("faculty_lat")
+        print(stu_lang)
+        print(stu_lat)
+        print(faculty_lang)
+        print(faculty_lat)
+        messages.success(request, "Your Current Location is send ")
+    return render(request, "home/addAttendance.html")
+
 
 def subjects(request):
     try:
@@ -26,7 +67,7 @@ def subjects(request):
             subjects=Subject.objects.filter(faculty_name=faculty)
     except Exception as e:
         messages.error(request,"No subjects were found")
-        redirect(Subject)
+        return redirect(homeView)
     context={
         "subjects": subjects,
     }

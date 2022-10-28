@@ -1,8 +1,21 @@
+{% extends 'base.html' %}
 {% load static %}
+{% block body %}
+{% if  user.is_authenticated%}
 <body onload="getLocation();">
-    <form class= "myFrom" action = "" method = "get">
-        <input type="hidden" id='lang' name="lang" value="">
-        <input type="hidden" id='lat' name="lat" value="">
+    <form class= "myFrom" id ="myForm" action = "#" method = "POST">
+        {% csrf_token %}
+        {% if user.user_type == '1' or user.is_superuser %} 
+            <input type="text" id='stu_lang' name="stu_lang" value="">
+            <input type="text" id='stu_lat' name="stu_lat" value="">
+        {% endif %}
+
+        {% if user.user_type == '2' or user.is_superuser %}
+            <input type="text" id='faculty_lang' name="faculty_lang" value="">
+            <input type="text" id='faculty_lat' name="faculty_lat" value="">
+        {% endif %}
+        <input type="submit" value="Submit">
+
     </form>
 
     <script>
@@ -15,12 +28,25 @@
         }
 
         function showPosition(position) {
-            document.getElementById("lat").value = position.coords.latitude;
-            document.getElementById("lang").value = position.coords.longitude;
+            //to get student getLocation
+            {% if user.user_type == '1' or user.is_superuser %}
+            document.getElementById("stu_lang").value = position.coords.latitude;
+            document.getElementById("stu_lat").value = position.coords.longitude;
+            {% endif %}
+
+            //to get faculty getLocation
+            {% if user.user_type == '2' or user.is_superuser %}
+            document.getElementById("faculty_lang").value = position.coords.latitude;
+            document.getElementById("faculty_lat").value = position.coords.longitude;
+            {% endif %}
             // x.innerHTML = "Latitude: " + position.coords.latitude +
             // "<br>Longitude: " + position.coords.longitude;
         }
+
+        //for auto submit
+
         </script>
 
 </body>
-</html>
+{% endif %}
+{% endblock body %}
