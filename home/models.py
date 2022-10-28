@@ -5,7 +5,7 @@ import accounts.models as account_model
 
 class Subject(models.Model):
     subject_name = models.CharField(max_length=255)
-    dept_name = models.ForeignKey(account_model.Department, on_delete=models.CASCADE) #need to give defauult course
+    dept_name = models.ForeignKey(account_model.Department, on_delete=models.CASCADE) 
     faculty_name = models.ForeignKey(account_model.Faculty, on_delete=models.CASCADE)
     sem = models.ForeignKey(account_model.Semester, on_delete=models.CASCADE)
     Students = models.ManyToManyField(account_model.Student)

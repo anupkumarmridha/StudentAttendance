@@ -5,7 +5,7 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     user_type_data = (("1", "Student"), ("2", "Faculty"))
     # user_type = models.CharField(choices=user_type_data, max_length=20)
-    user_type = models.CharField(default='1',choices=user_type_data, max_length=20)
+    user_type = models.CharField(default='2',choices=user_type_data, max_length=20)
 
 
 class Department(models.Model):

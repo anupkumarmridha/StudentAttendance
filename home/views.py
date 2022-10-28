@@ -15,22 +15,30 @@ def addSubject(request):
     if request.method == "POST":
         if request.user.is_authenticated:
             user=request.user
-            faculty=Faculty.objects.get(user=user)
-            print(faculty.Department)       
+
+            try:
+                faculty=Faculty.objects.get(user=user)
+                print(faculty.Department)       
+            except Exception as e:
+                messages.error(request, "Faculty details not found Please add faculty Details from profile section.")
+                return redirect(addSubject)
+
             form = addSubjectForm(request.POST)
             for field in form:
                 print(field.value())
             if form.is_valid():
                 obj = form.save(commit=False) # Return an object without saving to the DB
                 try:
-                    students=Student.objects.filter(Semester=obj.sem)
+                    students=Student.objects.filter(Semester=obj.sem, Department=faculty.Department)
+                    print(students)
                 except Exception as e:
                     print(e)
                 obj.dept_name= faculty.Department
-                obj.faculty_name = faculty # Add an author field which will contain current user's id
-                for item in students:
-                    obj.Students.add(item)
+                obj.faculty_name = faculty 
                 obj.save() # Save the final "real form" to the DB
+                for item in students:
+                    print(item)
+                    obj.Students.add(item)
                 messages.success(request, "Subject added Successfully!")
                 return redirect('viewSubject')
             else:
