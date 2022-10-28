@@ -6,9 +6,6 @@ from django.urls import reverse_lazy, reverse
 from home.models import Subject
 
 from django.views.generic import (
-    ListView,
-    DetailView,
-    CreateView,
     UpdateView,
     DeleteView,
 )
@@ -20,7 +17,13 @@ def homeView(request):
 
 def subjects(request):
     try:
-        subjects=Subject.objects.all()
+        user=request.user
+        if(user.user_type=='1'):
+            student=Student.objects.get(user=user)
+            subjects=Subject.objects.filter(Students=student)
+        if(user.user_type=='2'):
+            faculty=Faculty.objects.get(user=user)
+            subjects=Subject.objects.filter(faculty_name=faculty)
     except Exception as e:
         messages.error(request,"No subjects were found")
         redirect(Subject)
@@ -32,13 +35,12 @@ def subjects(request):
 def viewSubject(request, pk):
     try:
         subject=Subject.objects.get(id=pk)
-        print(subject.Students)
     except Exception as e:
         messages.error(request,"subject detail not found")
         print(e)
-        redirect(Subject)
+        redirect(subjects)
     context={
-        "subjects": subject,
+        "subject": subject,
     }
     return render(request, "home/viewSubject.html", context=context)
 

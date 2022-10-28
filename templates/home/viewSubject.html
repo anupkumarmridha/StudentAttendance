@@ -1,13 +1,37 @@
 {% extends 'base.html' %} 
 {% load static %}
-{% block title %}Subject{% endblock title %} 
+{% block title %}{{subject.subject_name}}{% endblock title %} 
 {% block homeactive %} active {% endblock homeactive %}
 
 
 
 
 {% block body %}
-{{ subject.Students }}
+
+
+<div class="container-fluid">
+    <table class="table table-striped table-hover table-info overflow-auto">
+        <thead>
+            <tr>
+                <th>Students</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if subject.Students.all %}
+            {% for student in subject.Students.all %}
+            <tr>     
+                <td>{{student}}</td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            No Student available
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+
+
+
 
 {% endblock body %}
 
