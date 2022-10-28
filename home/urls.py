@@ -6,4 +6,5 @@ urlpatterns = [
       path('viewSubject/<int:pk>', views.viewSubject, name='viewSubject'),
       path('subjects', views.subjects, name='subjects'),
       path('addSubject', views.addSubject, name='addSubject'),
+      path('updateSubject/<int:pk>', views.updateSubject.as_view(), name='updateSubject'),
 ]

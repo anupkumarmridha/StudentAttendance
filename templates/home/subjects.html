@@ -22,7 +22,7 @@
                     <td>{{ sub.faculty_name.user.first_name }}</td>
                     <td>{{ sub.dept_name.dept_name }}</td>
                     <td>{{ sub.sem.sem }}</td>
-                    <td> <a class="btn btn-sm btn-warning" href="#">Update</a> <a href="#" class="btn btn-sm btn-danger">Delete</a></td>
+                    <td> <a class="btn btn-sm btn-warning" href="{% url 'updateSubject' sub.pk %}">Update</a> <a href="#" class="btn btn-sm btn-danger">Delete</a></td>
                 </tr>
                 {% endfor %}
                 {% else %}
