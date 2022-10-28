@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Delete Subject{% endblock title %}
+{% block body %}
+{% if user.is_authenticated %}
+{% if user.user_type == '2' and user.faculty.id == subject.faculty_name.id %}
+<h1>Delete Product...</h1>
+    <br/><br/>
+<h3>Delete:{{ subject.subject_name }}</h3>
+<div class="form-group">
+        <form method="POST">
+            {% csrf_token %}
+            <strong>Are you Sure to Delete!!</strong><br><br>
+        <button class="btn btn-danger">Delete</button>
+    </form>
+</div>
+{% else %}
+You are Not allowed here
+{% endif %}
+
+{% else %}
+You are Not allowed here
+{% endif %}
+{% endblock body %}

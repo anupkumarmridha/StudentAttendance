@@ -23,3 +23,29 @@ class addSubjectForm(forms.ModelForm):
                 }
             ),
         }
+
+class updateSubjectForm(forms.ModelForm):
+    class Meta:
+        model = Subject
+        fields = (
+            "subject_name",
+            "sem",
+            "Students",
+        )
+        widgets = {
+            "subject_name": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                }
+            ),
+            "sem": forms.Select(
+                attrs={
+                    "class": "form-control",
+                }
+            ),
+            "Students": forms.Select(
+                attrs={
+                    "class": "form-control",
+                }
+            ),
+        }

@@ -1,15 +1,61 @@
 from django.shortcuts import render, redirect
-from home.forms import addSubjectForm
+from home.forms import addSubjectForm, updateSubjectForm
 from accounts.models import Faculty, Student
 from django.contrib import messages
+from django.urls import reverse_lazy, reverse
+from home.models import Subject
+
+from django.views.generic import (
+    ListView,
+    DetailView,
+    CreateView,
+    UpdateView,
+    DeleteView,
+)
 # Create your views here.
 
 # Create your views here.
 def homeView(request):
     return render(request, "home/index.html")
 
-def viewSubject(request):
-    return render(request, "home/viewSubject.html")
+def subjects(request):
+    try:
+        subjects=Subject.objects.all()
+    except Exception as e:
+        messages.error(request,"No subjects were found")
+        redirect(Subject)
+    context={
+        "subjects": subjects,
+    }
+    return render(request, "home/subjects.html", context=context)
+
+def viewSubject(request, pk):
+    try:
+        subject=Subject.objects.get(id=pk)
+        print(subject.Students)
+    except Exception as e:
+        messages.error(request,"subject detail not found")
+        print(e)
+        redirect(Subject)
+    context={
+        "subjects": subject,
+    }
+    return render(request, "home/viewSubject.html", context=context)
+
+class updateSubject(UpdateView):
+    model = Subject
+    form_class = updateSubjectForm
+    template_name = "home/updateSubject.html"
+
+    def get_success_url(self):
+        return reverse("subjects")
+
+class DeletePostView(DeleteView):
+    model=Subject
+    template_name='product/delete_product.html'
+    success_url=reverse_lazy('subjects')
+
+
 
 def addSubject(request):
     if request.method == "POST":

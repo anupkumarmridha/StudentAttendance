@@ -16,9 +16,10 @@
         {% if user.user_type == '2' or user.is_superuser %}
         <li class="sidenav-list-item"><i class="bi bi-person-fill"></i> <a href= "{% url 'viewFacultyProfile' %}" class="dash-link">Profile</a></li>
         <li class="sidenav-list-item"><i class="bi bi-arrow-bar-up"></i> <a href="{% url 'addSubject' %}" class="dash-link">Add Subjects</a></li>
+        <li class="sidenav-list-item"><i class="bi bi-circle"></i> <a href="{% url 'subjects' %}" class="dash-link">View Subjects</a></li>
         {% endif %}
         
-        <li class="sidenav-list-item"><i class="bi bi-circle"></i> <a href="#" class="dash-link">Interview Expriences</a></li>
+        
         <li class="sidenav-list-item"><i class="bi bi-app-indicator"></i> <a href="#" class="dash-link">Add Interview Expriences</a></li>
         <li class="sidenav-list-item"><i class="bi bi-archive"></i> <a href="#" class="dash-link">Jobs</a></li>
         

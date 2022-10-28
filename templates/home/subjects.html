@@ -1,0 +1,34 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% block title %}Interview Expriences{% endblock title %} 
+
+{% block body %}
+    <div class="container-fluid">
+        <table class="table table-striped table-hover table-info overflow-auto">
+            <thead>
+                <tr>
+                    <th>Subject Name</th>
+                    <th>Faculty Name</th>
+                    <th>Dept Name</th>
+                    <th>Semester</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if subjects %}
+                {% for sub in subjects %}
+                <tr>
+                    <td> <a class="btn btn-sm btn-primary" href="{% url 'viewSubject' sub.pk %}">{{ sub.subject_name }}</a> </td>
+                    <td>{{ sub.faculty_name.user.first_name }}</td>
+                    <td>{{ sub.dept_name.dept_name }}</td>
+                    <td>{{ sub.sem.sem }}</td>
+                    <td> <a class="btn btn-sm btn-warning" href="#">Update</a> <a href="#" class="btn btn-sm btn-danger">Delete</a></td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                No Subjects available
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+{% endblock body %}
