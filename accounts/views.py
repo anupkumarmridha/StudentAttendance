@@ -19,9 +19,9 @@ def handelSingup(request):
         email = request.POST["email"]
         pass1 = request.POST["pass1"]
         pass2 = request.POST["pass2"]
-        user_type = "2"
+        # user_type = "2"
         # check for errorneous input
-        print(user_type)
+        # print(user_type)
 
         if pass1 != pass2:
             messages.error(request, "Password do not match.")

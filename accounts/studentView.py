@@ -9,7 +9,7 @@ def viewStudentProfile(request):
     try:
         user=request.user
         studentProfile = Student.objects.filter(user=user)
-        print(studentProfile)
+        # print(studentProfile)
         context={
         'studentDetails': studentProfile
         }
