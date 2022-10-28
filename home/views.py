@@ -88,7 +88,7 @@ def addSubject(request):
                     print(item)
                     obj.Students.add(item)
                 messages.success(request, "Subject added Successfully!")
-                return redirect('viewSubject')
+                return redirect('subjects')
             else:
                 print("ERROR : Form is invalid")
                 messages.error(request, "ERROR : Form is invalid!")

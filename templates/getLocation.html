@@ -1,24 +1,26 @@
 {% load static %}
-<body onLoad="getLocation()" >
+<body onload="getLocation();">
+    <form class= "myFrom" action = "" method = "get">
+        <input type="hidden" id='lang' name="lang" value="">
+        <input type="hidden" id='lat' name="lat" value="">
+    </form>
 
-<p id="getLoc"></p>
+    <script>
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
 
-<script>
-var x = document.getElementById("getLoc");
-
-function getLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition);
-  } else { 
-    x.innerHTML = "Geolocation is not supported by this browser.";
-  }
-}
-
-function showPosition(position) {
-  x.innerHTML = "Latitude: " + position.coords.latitude + 
-  "<br>Longitude: " + position.coords.longitude;
-}
-</script>
+        function showPosition(position) {
+            document.getElementById("lat").value = position.coords.latitude;
+            document.getElementById("lang").value = position.coords.longitude;
+            // x.innerHTML = "Latitude: " + position.coords.latitude +
+            // "<br>Longitude: " + position.coords.longitude;
+        }
+        </script>
 
 </body>
 </html>
