@@ -20,7 +20,7 @@
         <li class="sidenav-list-item"><i class="bi bi-circle"></i> <a href="{% url 'subjects' %}" class="dash-link">View Subjects</a></li>
         {% endif %}
              
-        <li class="sidenav-list-item"><i class="bi bi-key-fill"></i> <a href="#" class="dash-link">Change Password</a>   </li>
+        <li class="sidenav-list-item"><i class="bi bi-key-fill"></i> <a href="{% url 'password_change' %}" class="dash-link">Change Password</a>   </li>
         <ul class="login-btns">
           <li class="sidenav-list-item"> <a class="dash-link">
             <form action='{% url 'handleLogout' %}' method='post'>
