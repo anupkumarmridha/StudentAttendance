@@ -9,7 +9,6 @@ from django.contrib import messages
 from home import views
 from accounts.studentView import viewStudentProfile
 
-
 def handelSingup(request):
     if request.method == "POST":
         # Get the post parameters
@@ -66,6 +65,18 @@ def handleLogin(request):
         user=authenticate(username=loginusername, password=loginpassword)
         if user is not None:
             login(request, user)
+            # get locations from coockeis
+            
+            stu_lang = request.COOKIES.get('stu_lang')
+            stu_lat = request.COOKIES.get('stu_lat')
+            faculty_lang = request.COOKIES.get('faculty_lang')
+            faculty_lat = request.COOKIES.get('faculty_lat')
+            # set session value
+            request.session['student_longitude'] = stu_lang
+            request.session['student_latitude'] = stu_lat
+            request.session['faculty_longitude'] = faculty_lang
+            request.session['faculty_latitude'] = faculty_lat
+            
             messages.success(request, "Successfuly logged in 🥰")
             return redirect(views.homeView)
         else:
@@ -77,8 +88,13 @@ def handleLogout(request):
     if request.method == "POST":
         value = request.POST["value"]
         logout(request)
-        messages.success(request, "Successfuly logged out 🥰")
+        response=redirect(views.homeView)
+        print(response)
+        for cookie in request.COOKIES:
+            response.delete_cookie(cookie)
 
-        return redirect(views.homeView)
+        messages.success(request, "Successfuly logged out 🥰")
+        return response
+
     else:
              return HttpResponse("Sorry No Users Logged in 😎")

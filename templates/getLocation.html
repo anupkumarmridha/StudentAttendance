@@ -1,27 +1,11 @@
-{% extends 'base.html' %}
 {% load static %}
 {% block body %}
 {% if  user.is_authenticated%}
 <body onload="getLocation();">
-    <form class= "myFrom" id ="myForm" action = "#" method = "POST">
-        {% csrf_token %}
-        {% if user.user_type == '1' or user.is_superuser %} 
-            <input type="hidden" id='stu_lang' name="stu_lang" value="">
-            <input type="hidden" id='stu_lat' name="stu_lat" value="">
-        {% endif %}
-
-        {% if user.user_type == '2' or user.is_superuser %}
-            <input type="hidden" id='faculty_lang' name="faculty_lang" value="">
-            <input type="hidden" id='faculty_lat' name="faculty_lat" value="">
-        {% endif %}
-        <input type="submit" class="btn btn-success" value="Submit">
-
-    </form>
-
     <script>
-        function getLocation() {
+        async function getLocation() {
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showPosition);
+                await navigator.geolocation.getCurrentPosition(showPosition);
             } else {
                 x.innerHTML = "Geolocation is not supported by this browser.";
             }
@@ -30,14 +14,14 @@
         function showPosition(position) {
             //to get student getLocation
             {% if user.user_type == '1' or user.is_superuser %}
-            document.getElementById("stu_lang").value = position.coords.latitude;
-            document.getElementById("stu_lat").value = position.coords.longitude;
+            document.cookie="stu_lang="+ position.coords.latitude;
+            document.cookie="stu_lat="+position.coords.longitude;
             {% endif %}
 
             //to get faculty getLocation
             {% if user.user_type == '2' or user.is_superuser %}
-            document.getElementById("faculty_lang").value = position.coords.latitude;
-            document.getElementById("faculty_lat").value = position.coords.longitude;
+            document.cookie="faculty_lang="+position.coords.latitude;
+            document.cookie="faculty_lat="+position.coords.longitude;
             {% endif %}
             // x.innerHTML = "Latitude: " + position.coords.latitude +
             // "<br>Longitude: " + position.coords.longitude;
