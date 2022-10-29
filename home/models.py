@@ -20,7 +20,7 @@ class Attendance(models.Model):
     subject = models.ForeignKey(Subject,on_delete=models.CASCADE)
     student = models.ForeignKey(account_model.Student, on_delete=models.CASCADE)
     attendance_date = models.DateField(default=datetime.date.today)
-    status = models.CharField(max_length=250, choices = [('1','Present'),('2','Absent')] )
+    status = models.CharField(default='0', max_length=250, choices = [('1','Present'),('0','Absent')] )
     date_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):

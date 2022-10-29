@@ -1,3 +1,4 @@
+from multiprocessing import context
 from django.shortcuts import render, redirect
 from home.forms import addSubjectForm, updateSubjectForm, addAttendanceForm
 from accounts.models import Faculty, Student
@@ -45,6 +46,16 @@ def homeView(request):
 
 #     return render(request, "location.html")
 
+def viewAttendance(request):
+    user=request.user
+    student=Student.objects.get(user=user)
+    attendance=Attendance.objects.filter(student=student)
+
+    context={
+        "attendance":attendance
+    }
+    print(context)
+    return render(request, "home/viewAttendance.html", context=context)
 
 
 def addAttendance(request):
@@ -78,7 +89,7 @@ def addAttendance(request):
             if form.is_valid():
                 obj = form.save(commit=False) # Return an object without saving to the DB
                 obj.student=student
-                
+
                 if(student_latitude==faculty_latitude or student_longitude==faculty_longitude):
                     obj.status="1"
                     obj.save() # Save the final "real form" to the DB
@@ -89,6 +100,7 @@ def addAttendance(request):
         form = addAttendanceForm()
     context = {"form": form}  
     return render(request, "home/addAttendance.html",context=context)
+
 
 
 def subjects(request):
