@@ -6,15 +6,15 @@
     <form class= "myFrom" id ="myForm" action = "#" method = "POST">
         {% csrf_token %}
         {% if user.user_type == '1' or user.is_superuser %} 
-            <input type="text" id='stu_lang' name="stu_lang" value="">
-            <input type="text" id='stu_lat' name="stu_lat" value="">
+            <input type="hidden" id='stu_lang' name="stu_lang" value="">
+            <input type="hidden" id='stu_lat' name="stu_lat" value="">
         {% endif %}
 
         {% if user.user_type == '2' or user.is_superuser %}
-            <input type="text" id='faculty_lang' name="faculty_lang" value="">
-            <input type="text" id='faculty_lat' name="faculty_lat" value="">
+            <input type="hidden" id='faculty_lang' name="faculty_lang" value="">
+            <input type="hidden" id='faculty_lat' name="faculty_lat" value="">
         {% endif %}
-        <input type="submit" value="Submit">
+        <input type="submit" class="btn btn-success" value="Submit">
 
     </form>
 

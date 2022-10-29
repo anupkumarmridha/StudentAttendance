@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from home.forms import addSubjectForm, updateSubjectForm
+from home.forms import addSubjectForm, updateSubjectForm, addAttendanceForm
 from accounts.models import Faculty, Student
 from django.contrib import messages
 from django.urls import reverse_lazy, reverse
@@ -12,6 +12,14 @@ from django.views.generic import (
 
 # Create your views here.
 def homeView(request):
+    stu_lang = request.session.get('stu_lang')
+    stu_lat = request.session.get('stu_lat')
+    faculty_lang = request.session.get('faculty_lang')
+    faculty_lat = request.session.get('faculty_lat')
+    print(stu_lang)
+    print(stu_lat)
+    print(faculty_lang)
+    print(faculty_lat)
     return render(request, "home/index.html")
 
 
@@ -21,17 +29,16 @@ def getLocation(request):
         stu_lat = request.POST.get("stu_lat")
         faculty_lang = request.POST.get("faculty_lang")
         faculty_lat = request.POST.get("faculty_lat")
-        print(stu_lang)
-        print(stu_lat)
-        print(faculty_lang)
-        print(faculty_lat)
+        # print(stu_lang)
+        # print(stu_lat)
+        # print(faculty_lang)
+        # print(faculty_lat)
+        request.session['stu_lang'] = stu_lang
+        request.session['stu_lat'] = stu_lat
+        request.session['faculty_lang'] = faculty_lang
+        request.session['faculty_lat'] = faculty_lat
         messages.success(request, "Your Current Location is send ")    
-        loc={
-            "stu_lang":stu_lang,
-            "stu_lat":stu_lat,
-            "faculty_lang": faculty_lang,
-            "faculty_lat":faculty_lat
-        }
+
     return render(request, "getLocation.html")
 
 
@@ -42,18 +49,19 @@ def addAttendance(request):
         student=Student.objects.get(user=user)
     except Exception as e:
         print(e)
-        
-    if request.method=='POST':   
-        stu_lang = request.POST.get("stu_lang")
-        stu_lat = request.POST.get("stu_lat")
-        faculty_lang = request.POST.get("faculty_lang")
-        faculty_lat = request.POST.get("faculty_lat")
+    if request.method == 'POST':
+        stu_lang = request.session.get('stu_lang')
+        stu_lat = request.session.get('stu_lat')
+        faculty_lang = request.session.get('faculty_lang')
+        faculty_lat = request.session.get('faculty_lat')
         print(stu_lang)
         print(stu_lat)
         print(faculty_lang)
         print(faculty_lat)
-        messages.success(request, "Your Current Location is send ")
-    return render(request, "home/addAttendance.html")
+    else:
+        form = addAttendanceForm()
+    context = {"form": form}  
+    return render(request, "home/addAttendance.html",context=context)
 
 
 def subjects(request):

@@ -1,7 +1,23 @@
 from urllib import request
 from django import forms
-from accounts.models import User, Student, Faculty, Department, Semester
-from home.models import Subject
+from home.models import Subject, Attendance
+
+
+
+
+class addAttendanceForm(forms.ModelForm):
+    class Meta:
+        model = Attendance
+        fields = (
+            "subject",
+        )
+        widgets = {
+            "subject": forms.Select(
+                attrs={
+                    "class": "form-control",
+                }
+            ),
+        }
 
 
 class addSubjectForm(forms.ModelForm):
