@@ -20,7 +20,7 @@ def homeView(request):
             try:
                 student=Student.objects.get(user=user)
             except Exception as e:
-                messages.error(request,"Faculty dose not exist please add profile details")
+                messages.error(request,"Student dose not exist please add profile details")
                 redirect(homeView)
             # get locations from coockeis            
             stu_lang = request.COOKIES.get('stu_lang')
@@ -52,13 +52,16 @@ def homeView(request):
 
 def viewAttendance(request):
     user=request.user
-    student=Student.objects.get(user=user)
-    attendance=Attendance.objects.filter(student=student)
-
-    context={
-        "attendance":attendance
-    }
-    print(context)
+    context={}
+    try:
+        student=Student.objects.get(user=user)
+        attendance=Attendance.objects.filter(student=student)   
+        context={
+            "attendance":attendance
+        }
+    except Exception as e:
+        messages.error(request,"Student dose not exist please add profile details")
+        redirect(homeView)
     return render(request, "home/viewAttendance.html", context=context)
 
 
