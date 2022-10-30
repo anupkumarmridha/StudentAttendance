@@ -4,12 +4,19 @@
 {% block body %}
 {% if user.is_authenticated %}
 
+<div>
+    <a class="btn btn-success ms-5  m-2" href="{% url 'send_otp' %}">send otp</a>
+</div>    
+
 <div class="container-fluid bg-white my-5 p-2" id="add-prod-css">
 <!-- <h1 class="text-center">List Your</h1> -->
-    
     <br/><br/>
     <div class="form-group">
         <form method="POST" enctype="multipart/form-data">
+            <label for="otp">Enter otp</label>
+            <input type="otp" class="form-control" id="otp" name="otp"
+                placeholder="Enter your OTP" autocomplete="otp" required>
+           
             {% csrf_token %}
             {{ form.media }}
             {{ form.as_p }}

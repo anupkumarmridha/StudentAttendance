@@ -6,6 +6,7 @@ from accounts.models import Faculty, Student
 from django.contrib import messages
 from django.urls import reverse_lazy, reverse
 from home.models import Subject, Attendance
+from home.helpers import send_otp_to_phone
 
 from django.views.generic import (
     UpdateView,
@@ -64,6 +65,22 @@ def viewAttendance(request):
         redirect(homeView)
     return render(request, "home/viewAttendance.html", context=context)
 
+def send_otp(request):
+    red=redirect(addAttendance)
+    try:
+        user=request.user
+        student=Student.objects.get(user=user)
+        print(student.phone)
+        messages.success(request, "Otp Send Successfully!")
+        otp=send_otp_to_phone(student.phone)
+        print(otp)
+        red.set_cookie("otp", otp, max_age=600)
+        red.set_cookie("can_otp_enter",True,max_age=600)
+        
+    except Exception as e:
+        print(e)
+        messages.error(request, "Internal Error!")
+    return red
 
 def addAttendance(request):
     user=request.user
@@ -71,7 +88,9 @@ def addAttendance(request):
         student=Student.objects.get(user=user)
     except Exception as e:
         print(e)
+    
     if request.method == 'POST':
+        otp = request.POST["otp"]
         if request.user.is_authenticated:
             user=request.user
             try:
@@ -92,15 +111,20 @@ def addAttendance(request):
                 except Exception as e:
                     print(e)
                 if(student.location_latitude==faculty.location_latitude or student.location_longitude==faculty.location_longitude):
-                    obj.status="Present"
-                    obj.save() # Save the final "real form" to the DB
-                    messages.success(request, "Attendance added Successfully!")
+
+                    if(request.COOKIES.get('can_otp_enter')!=None and request.COOKIES.get('otp')==otp):
+                        obj.status="Present"
+                        obj.save() # Save the final "real form" to the DB
+                        messages.success(request, "Attendance added Successfully!")
+                    else:
+                        messages.error(request, "Invalid OTP")
                 else:
                     messages.error(request, "Location not matched!")
     else:
         form = addAttendanceForm()
     context = {"form": form}  
     return render(request, "home/addAttendance.html",context=context)
+
 
 
 
@@ -140,11 +164,6 @@ class updateSubject(UpdateView):
 
     def get_success_url(self):
         return reverse("subjects")
-
-class DeletePostView(DeleteView):
-    model=Subject
-    template_name='product/delete_product.html'
-    success_url=reverse_lazy('subjects')
 
 
 
