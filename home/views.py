@@ -25,9 +25,7 @@ def homeView(request):
             # get locations from coockeis            
             stu_lang = request.COOKIES.get('stu_lang')
             stu_lat = request.COOKIES.get('stu_lat')
-            # set session value
-            # request.session['student_longitude'] = stu_lang
-            # request.session['student_latitude'] = stu_lat
+
             student.location_latitude=stu_lang
             student.location_longitude=stu_lat
             student.save()
@@ -42,22 +40,11 @@ def homeView(request):
             # get locations from coockeis   
             faculty_lang = request.COOKIES.get('faculty_lang')
             faculty_lat = request.COOKIES.get('faculty_lat')
-            # set session value
-            request.session['faculty_longitude'] = faculty_lang
-            request.session['faculty_latitude'] = faculty_lat
+            
             faculty.location_latitude=faculty_lang
             faculty.location_longitude=faculty_lat
             faculty.save()
 
-    # stud_longi = request.session['student_longitude']
-    # stud_lati = request.session['student_latitude']
-    # fuclty_longi = request.session['faculty_longitude']
-    # fuclty_lati = request.session['faculty_latitude']
-        
-    # print(stud_longi)
-    # print(stud_lati)
-    # print(fuclty_longi)
-    # print(fuclty_lati)
     except Exception as e:
         pass
     return render(request, "home/index.html")
@@ -103,15 +90,6 @@ def addAttendance(request):
     except Exception as e:
         print(e)
     if request.method == 'POST':
-        # student_longitude = request.session.get('student_longitude')
-        # student_latitude = request.session.get('student_latitude')
-        # faculty_longitude = request.session.get('faculty_longitude')
-        # faculty_latitude = request.session.get('faculty_latitude')
-        
-        # print(student_longitude)
-        # print(student_latitude)
-        # print(faculty_longitude)
-        # print(faculty_latitude)
         if request.user.is_authenticated:
             user=request.user
             try:
