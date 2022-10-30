@@ -40,7 +40,7 @@ def homeView(request):
             # get locations from coockeis   
             faculty_lang = request.COOKIES.get('faculty_lang')
             faculty_lat = request.COOKIES.get('faculty_lat')
-            
+
             faculty.location_latitude=faculty_lang
             faculty.location_longitude=faculty_lat
             faculty.save()
@@ -49,27 +49,6 @@ def homeView(request):
         pass
     return render(request, "home/index.html")
 
-
-# def getLocation(request):
-#     stu_lang = request.COOKIES.get('stu_lang')
-#     print(stu_lang)
-
-#     if request.method=='POST':   
-#         stu_lang = request.POST.get("stu_lang")
-#         stu_lat = request.POST.get("stu_lat")
-#         faculty_lang = request.POST.get("faculty_lang")
-#         faculty_lat = request.POST.get("faculty_lat")
-#         # print(stu_lang)
-#         # print(stu_lat)
-#         # print(faculty_lang)
-#         # print(faculty_lat)
-#         request.session['stu_lang'] = stu_lang
-#         request.session['stu_lat'] = stu_lat
-#         request.session['faculty_lang'] = faculty_lang
-#         request.session['faculty_lat'] = faculty_lat
-#         messages.success(request, "Your Current Location is send ")    
-
-#     return render(request, "location.html")
 
 def viewAttendance(request):
     user=request.user
@@ -123,15 +102,6 @@ def addAttendance(request):
 
 
 def subjects(request):
-    student_longitude = request.session.get('student_longitude')
-    student_latitude = request.session.get('student_latitude')
-    faculty_longitude = request.session.get('faculty_longitude')
-    faculty_latitude = request.session.get('faculty_latitude')
-    
-    print(student_longitude)
-    print(student_latitude)
-    print(faculty_longitude)
-    print(faculty_latitude)
     try:
         user=request.user
         if(user.user_type=='1'):
