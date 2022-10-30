@@ -65,18 +65,6 @@ def handleLogin(request):
         user=authenticate(username=loginusername, password=loginpassword)
         if user is not None:
             login(request, user)
-            # get locations from coockeis
-            
-            stu_lang = request.COOKIES.get('stu_lang')
-            stu_lat = request.COOKIES.get('stu_lat')
-            faculty_lang = request.COOKIES.get('faculty_lang')
-            faculty_lat = request.COOKIES.get('faculty_lat')
-            # set session value
-            request.session['student_longitude'] = stu_lang
-            request.session['student_latitude'] = stu_lat
-            request.session['faculty_longitude'] = faculty_lang
-            request.session['faculty_latitude'] = faculty_lat
-            
             messages.success(request, "Successfuly logged in 🥰")
             return redirect(views.homeView)
         else:

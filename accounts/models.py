@@ -46,6 +46,10 @@ class Faculty(models.Model):
     profile_pic = models.ImageField(
         null=True, blank=True, upload_to="images/Facultys/profile/"
     )
+
+    location_latitude = models.CharField('Latitude', max_length=20, null=True, blank=True)
+    location_longitude = models.CharField('Longitude', max_length=20, null=True, blank=True)
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     objects = models.Manager()
@@ -66,6 +70,10 @@ class Student(models.Model):
     roll = models.CharField(max_length=9, unique=True)
     Department = models.ForeignKey(Department, on_delete=models.CASCADE)
     Semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
+
+    location_latitude = models.CharField('Latitude', max_length=20, null=True, blank=True)
+    location_longitude = models.CharField('Longitude', max_length=20, null=True, blank=True)
+    
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     objects = models.Manager()
