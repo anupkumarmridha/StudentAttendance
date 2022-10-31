@@ -74,8 +74,8 @@ def send_otp(request):
         messages.success(request, "Otp Send Successfully!")
         otp=send_otp_to_phone(student.phone)
         print(otp)
-        red.set_cookie("otp", otp, max_age=600)
-        red.set_cookie("can_otp_enter",True,max_age=600)
+        red.set_cookie("otp", otp, max_age=180)
+        red.set_cookie("can_otp_enter",True,max_age=180)
         
     except Exception as e:
         print(e)
